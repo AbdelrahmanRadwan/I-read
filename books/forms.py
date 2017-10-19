@@ -1,9 +1,11 @@
 from django import forms
 from .models import Book
 
+
 class CreateBookForm(forms.ModelForm):
     class Meta:
         model  = Book
         fields = [
-            "Title", "Category", "NumberOfPages"
+            "Author_Name", "Title", "Category", "Number_of_Pages",
         ]
+
