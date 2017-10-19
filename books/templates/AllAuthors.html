@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <input id="search" type="text" placeholder="Type here">
+    <input id="submit" type="submit" value="Search">
+
+
+    <h2>List of the Authors</h2>
+    <ol>
+        {% for author in all_authors%}
+            <li>{{author.email}}</li>
+        {% endfor %}
+
+    </ol>
+
+
+</body>
+</html>
+
