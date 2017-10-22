@@ -3,7 +3,9 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.db import models
+from django.contrib.auth.models import User
 
+'''
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
@@ -117,3 +119,4 @@ class User(AbstractBaseUser):
     def is_author(self):
         "Is the user an author?"
         return self.author
+'''

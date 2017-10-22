@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template import loader
 from django.views import generic
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from .forms import UserForm

@@ -1,7 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.urlpatterns import format_suffix_patterns
-from django.conf.urls import url, include
 from rest_framework import routers
 from django.conf.urls import url, include
 from . import views

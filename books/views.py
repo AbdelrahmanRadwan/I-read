@@ -2,17 +2,22 @@ from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import CreateBookForm
 from .models import Book
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 
 
 # write the names of all books in the data base
 def ListBookView(request):
     all_books = Book.objects.all()
+    query = request.GET.get("q")
     template = loader.get_template('AllBooks.html')
+
+    if query:
+        all_books =all_books.filter(Title__icontains=query)
     context = \
         {
             'all_books': all_books,
+            'request':request,
         }
     return HttpResponse(template.render(context, request))
 
@@ -29,6 +34,8 @@ def DetailsBookView(Request, id):
 
 # the view which enables the user to add a book
 def CreateBookView(request):
+    if not request.user.is_superuser:
+        raise Http404
     # checking if the form filled well, then we will save the record
     form = CreateBookForm(request.POST or None)
     if form.is_valid():
@@ -46,7 +53,8 @@ def CreateBookView(request):
 
 
 def UpdateBookView(request, id):
-
+    if not request.user.is_superuser:
+        raise Http404
     # checking if the form filled well, then we will save the record
     instance = get_object_or_404(Book,id=id)
     form = CreateBookForm(request.POST or None, instance= instance)
@@ -65,7 +73,8 @@ def UpdateBookView(request, id):
     return HttpResponse(template.render(context, request))
 
 def DeleteBookView(request, id):
-
+    if not request.user.is_superuser:
+        raise Http404
     # checking if the form filled well, then we will save the record
     instance = get_object_or_404(Book,id=id)
     instance.delete()

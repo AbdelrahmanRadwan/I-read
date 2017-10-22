@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_extensions',
 ]
-AUTH_USER_MODEL = 'accounts.User' #change the built in user model.
+#AUTH_USER_MODEL = 'accounts.User' #change the built in user model.
 
 
 MIDDLEWARE = [
