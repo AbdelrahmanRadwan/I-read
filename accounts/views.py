@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from django.shortcuts import render
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -9,7 +7,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from .forms import UserForm
-# Create your views here.
 
 class UserFormView(View):
     form_class = UserForm
@@ -51,3 +48,19 @@ def login_user(request):
         else:
             return render(request, 'Author/login.html', {'error_message': 'Invalid login'})
     return render(request, 'Author/login.html')
+
+
+
+def ListUserView(request):
+    all_users = User.objects.all()
+    query = request.GET.get("q")
+    template = loader.get_template('AllUsers.html')
+
+    if query:
+        all_users =all_users.filter(Title__icontains=query)
+    context = \
+        {
+            'all_users': all_users,
+            'request':request,
+        }
+    return HttpResponse(template.render(context, request))

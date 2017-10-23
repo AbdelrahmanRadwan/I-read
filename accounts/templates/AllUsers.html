@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form method="GET" action="" >
+    <input type="text" name = 'q' placeholder="search posts" value="{{ request.GET.get.q }}"/>
+    <input type="submit" placeholder="search"/>
+
+</form>
+    <h2>List of the Users</h2>
+
+    <ol>
+        {% for user in all_users%}
+            <li> {{user.email}} <br>
+            </li>
+        {% endfor %}
+
+    </ol>
+
+</body>
+</html>

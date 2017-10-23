@@ -4,6 +4,7 @@ from .forms import CreateBookForm
 from .models import Book
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
+from django.contrib.auth.models import User
 
 
 # write the names of all books in the data base
@@ -20,7 +21,6 @@ def ListBookView(request):
             'request':request,
         }
     return HttpResponse(template.render(context, request))
-
 
 def DetailsBookView(Request, id):
     specific_Book = Book.objects.get(pk=id)

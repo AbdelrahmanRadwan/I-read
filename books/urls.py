@@ -9,8 +9,9 @@ app_name = 'books'
 urlpatterns = [
 
     url(r'^create/$', views.CreateBookView),
-    url(r'^$', views.ListBookView, name='home'),
+    url(r'^$', views.ListBookView),
     url(r'^all-books/$', views.ListBookView),
+
     url(r'^(?P<id>\d+)/$', views.DetailsBookView),
     url(r'^(?P<id>\d+)/edit/$', views.UpdateBookView),
     url(r'^(?P<id>\d+)/delete/$', views.DeleteBookView),
