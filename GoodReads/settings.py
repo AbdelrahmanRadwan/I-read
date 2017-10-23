@@ -38,10 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'books.apps.BooksConfig',
     'accounts.apps.AccountsConfig',
+    'haystack',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_extensions',
 ]
 #AUTH_USER_MODEL = 'accounts.User' #change the built in user model.
+#AUTH_USER_MODEL = 'auth.User'
 
 
 MIDDLEWARE = [
@@ -54,7 +57,27 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+'''
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+'''
 ROOT_URLCONF = 'GoodReads.urls'
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'localhost:9200',
+        'INDEX_NAME': 'haystack',
+    },
+}
+
 
 TEMPLATES = [
     {

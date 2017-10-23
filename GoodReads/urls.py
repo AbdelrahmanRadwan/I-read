@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^books/', include('books.urls')),
     url (r'^api/', include("books.api.urls")),
     url(r'^users/', include('accounts.urls')),
+    url(r'^elasticsearch/', include('haystack.urls')),
+
 ]

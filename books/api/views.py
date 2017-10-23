@@ -5,7 +5,7 @@ from rest_framework.generics import (
     DestroyAPIView,
     UpdateAPIView,
     CreateAPIView,
-)
+    get_object_or_404)
 from rest_framework.pagination import (
     LimitOffsetPagination,
     PageNumberPagination,
@@ -20,12 +20,17 @@ from rest_framework.permissions import(
     IsAdminUser,
     IsAuthenticatedOrReadOnly,
 )
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from .serializers import (
     BookSerializer,
     BookCreateUpdateSerializer,
 )
 
 from books.models import Book
+from django.contrib.auth.models import User
+
 
 class BookCreateAPIView(CreateAPIView):
     queryset = Book.objects.all()
@@ -68,3 +73,34 @@ class BookDeleteAPIView(DestroyAPIView):
 class BookUpdateAPIView(UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+class FavouriteBookView(APIView):
+
+    serializer_class = BookSerializer
+
+    def get(self, request, pk = None, format=None):
+        selected_book = get_object_or_404(Book, id=pk)
+        current_user = User.objects.get(id=request.user.id)
+
+        if current_user in selected_book.Users.all():
+            selected_book.Users.remove(request.user)
+        else:
+            selected_book.Users.add(request.user)
+        selected_book.save()
+        return Response("Book added to the favourites")
+
+
+
+    # def get(self):
+    #     queryset = self.filter_queryset(self.get_queryset())
+    #     lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+    #     filter_kwargs = {self.lookup_field: self.kwargs[lookup_url_kwarg]}
+    #     obj = get_object_or_404(queryset, **filter_kwargs)
+    #
+    #     obj.Users.add(self.user)
+    #     obj.save()
+    #     return obj
+
+
+
+

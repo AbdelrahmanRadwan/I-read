@@ -12,6 +12,7 @@ class BookCreateUpdateSerializer(serializers.ModelSerializer):
             "Title",
             "Category",
             "Number_of_Pages",
+            "Users",
         ]
 
 
@@ -24,5 +25,6 @@ class BookSerializer(serializers.ModelSerializer):
             "Title",
             "Category",
             "Number_of_Pages",
+            "Users",
         ]
 

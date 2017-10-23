@@ -16,7 +16,8 @@
 
     <ol>
         {% for book in all_books%}
-            <li> {{book.Title}} </li>
+            <li> Title: {{book.Title}} <br>
+                Number of likes: {{book.Users.count}} </li>
         {% endfor %}
 
     </ol>

@@ -5,7 +5,7 @@ from .models import Book
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from django.contrib.auth.models import User
-
+from django.views.generic import RedirectView
 
 # write the names of all books in the data base
 def ListBookView(request):
@@ -80,3 +80,13 @@ def DeleteBookView(request, id):
     instance.delete()
     return redirect('books:home')
 
+def LikeBookView(request, id):
+    selected_book = get_object_or_404(Book, id=id)
+    current_user = User.objects.get(id=request.user.id)
+
+    if current_user in selected_book.Users.all():
+        selected_book.Users.remove(request.user)
+    else:
+        selected_book.Users.add(request.user)
+    selected_book.save()
+    return redirect('books:home')
