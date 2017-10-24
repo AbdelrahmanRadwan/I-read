@@ -18,25 +18,21 @@ import csv
 
 # write the names of all books in the data base
 def ListBookView(request):
+    client = Elasticsearch()
+    my_search = Search(using=client)
     es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
     all_books = Book.objects.all()
     query = request.GET.get("q")
     template = loader.get_template('AllBooks.html')
 
     if query:
-        #all_books =all_books.filter(Title__icontains=query)
-        all_books = es.search(index="books", doc_type="books",
-                                body={
-                                    'query':
-                                        {
-                                            "match":
-                                                {'Title': query,
 
-                                                     }
-                                        }
-                                }
-                                )
-        pprint.pprint(all_books.get(0))
+
+        #all_books =all_books.filter(Title__icontains=query)
+        all_books = es.search(index="books", body={"query": {"match_all": {}}})
+
+
+        pprint.pprint(all_books['hits'])
 
     context = \
         {
