@@ -6,15 +6,38 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
 from django.contrib.auth.models import User
 from django.views.generic import RedirectView
+from pyelasticsearch import ElasticSearch
+from elasticsearch_dsl import Search
+from elasticsearch import helpers, Elasticsearch
+from collections import defaultdict
+from time import time
+import requests
+import json
+import pprint
+import csv
 
 # write the names of all books in the data base
 def ListBookView(request):
+    es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
     all_books = Book.objects.all()
     query = request.GET.get("q")
     template = loader.get_template('AllBooks.html')
 
     if query:
-        all_books =all_books.filter(Title__icontains=query)
+        #all_books =all_books.filter(Title__icontains=query)
+        all_books = es.search(index="books", doc_type="books",
+                                body={
+                                    'query':
+                                        {
+                                            "match":
+                                                {'Title': query,
+
+                                                     }
+                                        }
+                                }
+                                )
+        pprint.pprint(all_books.get(0))
+
     context = \
         {
             'all_books': all_books,
