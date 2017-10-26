@@ -32,7 +32,7 @@ def ListBookView(request):
         all_books = es.search(index="books", body={"query": {"match_all": {}}})
 
 
-        pprint.pprint(all_books['hits'])
+        pprint.pprint(all_books['hits']['hits'][0]['_source']['Author_Name'])
 
     context = \
         {
