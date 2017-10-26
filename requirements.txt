@@ -1,0 +1,7 @@
+Django==1.11.5
+elasticsearch==5.4.0
+pyelasticsearch==1.4
+requests==2.18.4
+elasticsearch_dsl==5.3.0
+django_haystack==2.7.dev0
+djangorestframework==3.7.1
